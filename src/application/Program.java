@@ -1,43 +1,31 @@
 package application;
-
-import java.util.Scanner;
 import java.util.Stack;
 
 public class Program {
 
     public static void main(String[] args) {
         
-        Scanner sc = new Scanner(System.in);
+    	Fila<String> fila = new Fila<>(5);
+        fila.enfileirar("Joey");
+        fila.enfileirar("Mike");
+        fila.enfileirar("Rayanne");
+        fila.enfileirar("Luci");
+        fila.enfileirar("Gal");
         
-        System.out.print("Digite um número inteiro diferente de zero: ");
-        int numero = sc.nextInt();
+        System.out.println("Fila original: " + fila);
         
-        // Validando se o número é diferente de zero
-        if (numero == 0) {
-            System.out.println("Número inválido!");
-            return;
+        inverterFila(fila);
+        
+        System.out.println("Fila invertida: " + fila);
+    }
+    
+    public static <T> void inverterFila(Fila<T> fila) {
+        Stack<T> pilha = new Stack<>();
+        while (!fila.estaVazia()) {
+            pilha.push(fila.desenfileirar());
         }
-        
-        Stack<Character> pilha = new Stack<>();
-        
-        // Convertendo para a base hexadecimal
-        while (numero != 0) {
-            int resto = numero % 16;
-            
-            if (resto < 10) {
-                pilha.push((char)(resto + 48)); // Empilhando os dígitos numéricos
-            } else {
-                pilha.push((char)(resto + 55)); // Empilhando as letras A-F
-            }
-            
-            numero /= 16;
-        }
-        
-        // Desempilhando os restos para exibir o resultado da conversão
-        System.out.print("Resultado da conversão é: ");
         while (!pilha.isEmpty()) {
-            System.out.print(pilha.pop());
+            fila.enfileirar(pilha.pop());
         }
     }
-
 }
